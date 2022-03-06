@@ -7,6 +7,7 @@ Steps to scale up this project:
 1) Creating the game with pygame
 2) Embedding the game on a website
 3) Creating a database to save scores
+4) Adding machine learning 
 
 Copyright:
 Images have been taken from the following websites. I do not own any of them:
