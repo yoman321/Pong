@@ -1,4 +1,5 @@
 import Bar
+import math
 import pygame
 from pygame.locals import *
 
@@ -15,6 +16,12 @@ pygame.display.update()
 #create the bars
 bar1 = Rect(25, 350, 5, 100)
 bar2 = Rect(970, 350, 5, 100)
+
+#create values for ball
+ballX = 500
+ballY = 400
+ballRadius = 13
+ballMovement = 5
 
 #create the clock 
 clock = pygame.time.Clock()
@@ -49,18 +56,29 @@ while running:
             if event.key == K_s:
                 keyS = False
             
-    #Move bar while key is pressed
-    if keyDown:
-        bar1.move_ip(moveDict[K_DOWN])
-    if keyUp:
-        bar1.move_ip(moveDict[K_UP])
-    if keyW:
-        bar2.move_ip(moveDict[K_UP])
+    #Move bar while key is pressed-
     if keyS:
+        bar1.move_ip(moveDict[K_DOWN])
+    if keyW:
+        bar1.move_ip(moveDict[K_UP])
+    if keyUp:
+        bar2.move_ip(moveDict[K_UP])
+    if keyDown:
         bar2.move_ip(moveDict[K_DOWN])
+
+    #move ball if ever it hits something
+    distanceBar2 = math.sqrt(math.pow((bar2.top - ballY), 2) + math.pow((bar2.left - ballX), 2))
+    print(bar2.top)
+    print(bar2.left)
+    if (distanceBar2 <= ballRadius):
+        ballMovement = -5
+
+    ballX += ballMovement
 
     #update the screen
     screen.fill((0, 0, 0))
+    pygame.draw.line(screen, (255, 1, 1), (500, 0), (500, 800), 1)
+    pygame.draw.circle(screen, (0, 0, 255), (ballX, ballY), ballRadius, 0)
     pygame.draw.rect(screen, (0, 255, 0), bar2)
     pygame.draw.rect(screen, (255, 0, 0), bar1)
     pygame.display.update()
