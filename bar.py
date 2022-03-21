@@ -1,9 +1,14 @@
 import pygame
 
 class Bar:
-    def __init__(self, x1, y1, width, height):
-        self.x1 = x1
-        self.y1 = y1
+    def __init__(self, xTop, yTop, xBot, yBot, width, height):
+        self.xTop = xTop
+        self.yTop = yTop
+        self.xBot = xBot
+        self.yBot = yBot
         self.height = height
         self.width = width
+    
+    
+
 
