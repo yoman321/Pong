@@ -1,20 +1,21 @@
-import Bar
+from Bar import Bar
+from Ball import Ball
+import math
 import pygame
 from pygame.locals import *
-
-#create a movement dictionary
-moveDict = {
-    K_DOWN: [0, 5],
-    K_UP: [0, -5],
-}
 
 pygame.init()
 screen = pygame.display.set_mode((1000, 800))
 pygame.display.update()
 
 #create the bars
-bar1 = Rect(25, 350, 5, 100)
-bar2 = Rect(970, 350, 5, 100)
+bar1 = Bar(25, 350, 25, 450, 5, 100)
+bar2 = Bar(970, 350, 25, 450, 5, 100)
+rectBar1 = Rect(bar1.xTop, bar1.yTop, bar1.width, bar1.height)
+rectBar2 = Rect(bar2.xTop, bar2.yTop, bar1.width, bar2.height)
+
+#create values for ball
+ball = Ball(500, 400, 13, 5)
 
 #create the clock 
 clock = pygame.time.Clock()
@@ -25,6 +26,7 @@ keyDown = False
 keyW = False
 keyS = False
 
+#Running algorithm
 running = True
 while running:
     for event in pygame.event.get():
@@ -49,20 +51,35 @@ while running:
             if event.key == K_s:
                 keyS = False
             
-    #Move bar while key is pressed
-    if keyDown:
-        bar1.move_ip(moveDict[K_DOWN])
-    if keyUp:
-        bar1.move_ip(moveDict[K_UP])
-    if keyW:
-        bar2.move_ip(moveDict[K_UP])
+    #Move bar while key is pressed-
     if keyS:
-        bar2.move_ip(moveDict[K_DOWN])
+        bar1.yTop += 5
+        bar2.yBot += 5
+        rectBar1.move_ip(0, 5)
+    if keyW:
+        bar1.xTop += -5
+        bar2.xBot += -5
+        rectBar1.move_ip(0, -5)
+    if keyUp:
+        bar2.xTop += -5
+        bar2.xBot += -5
+        rectBar2.move_ip(0, -5)
+    if keyDown:
+        bar2.xTop += 5
+        bar2.xBot += 5
+        rectBar2.move_ip(0, 5)
+
+    #change ball direction if ever it hits something
+    ball.distBar(bar1)
+    ball.distBar(bar2)
+    ball.x += ball.moveSpeed
 
     #update the screen
     screen.fill((0, 0, 0))
-    pygame.draw.rect(screen, (0, 255, 0), bar2)
-    pygame.draw.rect(screen, (255, 0, 0), bar1)
+    pygame.draw.line(screen, (255, 1, 1), (500, 0), (500, 800), 1)
+    pygame.draw.circle(screen, (0, 0, 255), (ball.x, ball.y), ball.radius, 0)
+    pygame.draw.rect(screen, (0, 255, 0), rectBar2)
+    pygame.draw.rect(screen, (255, 0, 0), rectBar1)
     pygame.display.update()
 
     #tick the clock to check next update
