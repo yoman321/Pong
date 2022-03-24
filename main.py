@@ -9,8 +9,8 @@ screen = pygame.display.set_mode((1000, 800))
 pygame.display.update()
 
 #create the bars
-bar1 = Bar(25, 350, 25, 450, 5, 100)
-bar2 = Bar(970, 350, 25, 450, 5, 100)
+bar1 = Bar(25, 350, 25, 450, 5, 100, "left")
+bar2 = Bar(970, 350, 970, 450, 5, 100, "right")
 rectBar1 = Rect(bar1.xTop, bar1.yTop, bar1.width, bar1.height)
 rectBar2 = Rect(bar2.xTop, bar2.yTop, bar1.width, bar2.height)
 
@@ -57,16 +57,16 @@ while running:
         bar2.yBot += 5
         rectBar1.move_ip(0, 5)
     if keyW:
-        bar1.xTop += -5
-        bar2.xBot += -5
+        bar1.yTop += -5
+        bar2.yBot += -5
         rectBar1.move_ip(0, -5)
     if keyUp:
-        bar2.xTop += -5
-        bar2.xBot += -5
+        bar2.yTop += -5
+        bar2.yBot += -5
         rectBar2.move_ip(0, -5)
     if keyDown:
-        bar2.xTop += 5
-        bar2.xBot += 5
+        bar2.yTop += 5
+        bar2.yBot += 5
         rectBar2.move_ip(0, 5)
 
     #change ball direction if ever it hits something
