@@ -1,10 +1,11 @@
+import Bar
 from Bar import Bar
+import Ball
 from Ball import Ball
-import math
 import pygame
 from pygame.locals import *
 
-pygame.init()
+pygame.init() #remove this line if the window does not pop up instantly
 screen = pygame.display.set_mode((1000, 800))
 pygame.display.update()
 
@@ -15,7 +16,7 @@ rectBar1 = Rect(bar1.xTop, bar1.yTop, bar1.width, bar1.height)
 rectBar2 = Rect(bar2.xTop, bar2.yTop, bar1.width, bar2.height)
 
 #create values for ball
-ball = Ball(500, 400, 13, 5)
+ball = Ball(500, 400, 13, 5, 5, 0, 180)
 
 #create the clock 
 clock = pygame.time.Clock()
@@ -28,7 +29,7 @@ keyS = False
 
 #Running algorithm
 running = True
-while running:
+while  running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -69,10 +70,11 @@ while running:
         bar2.yBot += 5
         rectBar2.move_ip(0, 5)
 
-    #change ball direction if ever it hits something
+   #change ball direction if ever it hits something
     ball.distBar(bar1)
     ball.distBar(bar2)
-    ball.x += ball.moveSpeed
+    ball.x += ball.moveX
+    ball.y += ball.moveY
 
     #update the screen
     screen.fill((0, 0, 0))
