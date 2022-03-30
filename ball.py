@@ -1,4 +1,5 @@
 from Bar import Bar
+from Border import Border
 import math
 
 class Ball:
@@ -57,3 +58,12 @@ class Ball:
                 self.moveX = math.cos(math.radians(self.angle)) * self.moveSpeed
                 self.moveY = math.sin(math.radians(self.angle)) * self.moveSpeed
 
+    def distBorder(self, border):
+        extremity = 0
+        if (border.name == "top"):
+            extremity = self.y - self.radius
+        else:
+            extremity = self.y + self.radius
+        
+        if (border.name == "top" and extremity <= border.yLeft) or (border.name == "bot" and extremity >= border.yLeft):
+            self.moveY *= -1

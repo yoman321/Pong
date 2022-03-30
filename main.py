@@ -1,6 +1,5 @@
-import Bar
+from Border import Border
 from Bar import Bar
-import Ball
 from Ball import Ball
 import pygame
 from pygame.locals import *
@@ -14,6 +13,12 @@ bar1 = Bar(25, 350, 25, 450, 5, 100, "left")
 bar2 = Bar(970, 350, 970, 450, 5, 100, "right")
 rectBar1 = Rect(bar1.xTop, bar1.yTop, bar1.width, bar1.height)
 rectBar2 = Rect(bar2.xTop, bar2.yTop, bar1.width, bar2.height)
+
+#create top and bottom borders
+topBorder = Border(1, 1, 1000, 0, 1000, 1, "top")
+botBorder = Border(0, 799, 1000, 799, 1000, 1, "bot")
+rectTopBorder = Rect(topBorder.xLeft, topBorder.yLeft, topBorder.width, topBorder.height)
+rectBotBorder = Rect(botBorder.xLeft, botBorder.yLeft, botBorder.width, botBorder.height)
 
 #create values for ball
 ball = Ball(500, 400, 13, 5, 5, 0, 180)
@@ -73,15 +78,19 @@ while  running:
    #change ball direction if ever it hits something
     ball.distBar(bar1)
     ball.distBar(bar2)
+    ball.distBorder(topBorder)
+    ball.distBorder(botBorder)
     ball.x += ball.moveX
     ball.y += ball.moveY
 
     #update the screen
-    screen.fill((0, 0, 0))
-    pygame.draw.line(screen, (255, 1, 1), (500, 0), (500, 800), 1)
-    pygame.draw.circle(screen, (0, 0, 255), (ball.x, ball.y), ball.radius, 0)
-    pygame.draw.rect(screen, (0, 255, 0), rectBar2)
+    screen.fill((0, 0, 0)) #reset screen
+    pygame.draw.line(screen, (255, 1, 1), (500, 0), (500, 800), 1) #draw middle line
+    pygame.draw.circle(screen, (0, 0, 255), (ball.x, ball.y), ball.radius, 0) #draw ball
+    pygame.draw.rect(screen, (0, 255, 0), rectBar2) #draw player bars
     pygame.draw.rect(screen, (255, 0, 0), rectBar1)
+    pygame.draw.rect(screen, (0, 255, 255), rectTopBorder)
+    pygame.draw.rect(screen, (0, 255, 255), rectBotBorder)
     pygame.display.update()
 
     #tick the clock to check next update
