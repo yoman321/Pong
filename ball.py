@@ -25,15 +25,15 @@ class Ball:
             if self.y >= bar.yTop and self.y <= bar.yBot:
                 self.moveSpeed = 5
                 if self.y >= bar.yTop and self.y < bar.yTop + 25:
-                    self.angle = 125
+                    self.angle = 290
                 elif self.y >= bar.yTop + 25 and self.y < bar.yTop + 50:
-                    self.angle = 160
+                    self.angle = 325
                 
                 elif self.y >= bar.yTop + 50 and self.y < bar.yTop + 75:
-                    self.angle = 325
+                    self.angle = 70
                     
                 elif self.y >= bar.yTop + 75 and self.y <= bar.yBot:
-                    self.angle = 290
+                    self.angle = 35
             
                 #change movement for x and y
                 self.moveX = math.cos(math.radians(self.angle)) * self.moveSpeed
@@ -42,7 +42,6 @@ class Ball:
         elif bar.player == "right" and extremity >= bar.xTop:
             if self.y >= bar.yTop and self.y <= bar.yBot:
                 self.moveSpeed = -5 #change movement direction
-                
                 if self.y >= bar.yTop and self.y < bar.yTop + 25:
                     self.angle = 35
                 elif self.y >= bar.yTop + 25 and self.y < bar.yTop + 50:

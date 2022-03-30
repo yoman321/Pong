@@ -21,7 +21,7 @@ rectTopBorder = Rect(topBorder.xLeft, topBorder.yLeft, topBorder.width, topBorde
 rectBotBorder = Rect(botBorder.xLeft, botBorder.yLeft, botBorder.width, botBorder.height)
 
 #create values for ball
-ball = Ball(500, 400, 13, 5, 5, 0, 180)
+ball = Ball(500, 400, 13, -5, -5, 0, 180)
 
 #create the clock 
 clock = pygame.time.Clock()
