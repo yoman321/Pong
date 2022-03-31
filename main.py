@@ -9,8 +9,8 @@ screen = pygame.display.set_mode((1000, 800))
 pygame.display.update()
 
 #create the bars
-bar1 = Bar(25, 350, 25, 450, 5, 100, "left")
-bar2 = Bar(970, 350, 970, 450, 5, 100, "right")
+bar1 = Bar(25, 350, 25, 450, 5, 100, "left", 8)
+bar2 = Bar(970, 350, 970, 450, 5, 100, "right", 8)
 rectBar1 = Rect(bar1.xTop, bar1.yTop, bar1.width, bar1.height)
 rectBar2 = Rect(bar2.xTop, bar2.yTop, bar1.width, bar2.height)
 
@@ -21,10 +21,11 @@ rectTopBorder = Rect(topBorder.xLeft, topBorder.yLeft, topBorder.width, topBorde
 rectBotBorder = Rect(botBorder.xLeft, botBorder.yLeft, botBorder.width, botBorder.height)
 
 #create values for ball
-ball = Ball(500, 400, 13, -5, -5, 0, 180)
+ball = Ball(500, 400, 13, -5, -5, 0, 180, True)
 
 #create the clock 
 clock = pygame.time.Clock()
+tickCheck = 0
 
 #boolean stateemtn to check if keys are still pressed
 keyUp = False
@@ -59,38 +60,38 @@ while  running:
             
     #Move bar while key is pressed-
     if keyS:
-        bar1.yTop += 5
-        bar2.yBot += 5
-        rectBar1.move_ip(0, 5)
+        bar1.yTop += bar1.moveSpeed
+        bar1.yBot += bar1.moveSpeed
+        rectBar1.move_ip(0, bar1.moveSpeed)
     if keyW:
-        bar1.yTop += -5
-        bar2.yBot += -5
-        rectBar1.move_ip(0, -5)
+        bar1.yTop += -bar1.moveSpeed
+        bar1.yBot += -bar1.moveSpeed
+        rectBar1.move_ip(0, -bar1.moveSpeed)
     if keyUp:
-        bar2.yTop += -5
-        bar2.yBot += -5
-        rectBar2.move_ip(0, -5)
+        bar2.yTop += -bar2.moveSpeed
+        bar2.yBot += -bar2.moveSpeed
+        rectBar2.move_ip(0, -bar2.moveSpeed)
     if keyDown:
-        bar2.yTop += 5
-        bar2.yBot += 5
-        rectBar2.move_ip(0, 5)
+        bar2.yTop += bar2.moveSpeed
+        bar2.yBot += bar2.moveSpeed
+        rectBar2.move_ip(0, bar2.moveSpeed)
 
    #change ball direction if ever it hits something
-    ball.distBar(bar1)
-    ball.distBar(bar2)
     ball.distBorder(topBorder)
     ball.distBorder(botBorder)
+    ball.distBar(bar1)
+    ball.distBar(bar2)
     ball.x += ball.moveX
     ball.y += ball.moveY
 
     #update the screen
     screen.fill((0, 0, 0)) #reset screen
     pygame.draw.line(screen, (255, 1, 1), (500, 0), (500, 800), 1) #draw middle line
-    pygame.draw.circle(screen, (0, 0, 255), (ball.x, ball.y), ball.radius, 0) #draw ball
     pygame.draw.rect(screen, (0, 255, 0), rectBar2) #draw player bars
     pygame.draw.rect(screen, (255, 0, 0), rectBar1)
     pygame.draw.rect(screen, (0, 255, 255), rectTopBorder)
     pygame.draw.rect(screen, (0, 255, 255), rectBotBorder)
+    pygame.draw.circle(screen, (0, 0, 255), (ball.x, ball.y), ball.radius, 0) #draw ball
     pygame.display.update()
 
     #tick the clock to check next update
