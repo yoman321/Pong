@@ -15,10 +15,14 @@ rectBar1 = Rect(bar1.xTop, bar1.yTop, bar1.width, bar1.height)
 rectBar2 = Rect(bar2.xTop, bar2.yTop, bar1.width, bar2.height)
 
 #create top and bottom borders
-topBorder = Border(1, 1, 1000, 0, 1000, 1, "top")
-botBorder = Border(0, 799, 1000, 799, 1000, 1, "bot")
-rectTopBorder = Rect(topBorder.xLeft, topBorder.yLeft, topBorder.width, topBorder.height)
-rectBotBorder = Rect(botBorder.xLeft, botBorder.yLeft, botBorder.width, botBorder.height)
+leftBorder = Border(1, 1, 1, 800, "left")
+rightBorder = Border(999, 0, 1, 800, "right")
+topBorder = Border(1, 1, 1000, 1, "top")
+botBorder = Border(0, 799, 1000, 1, "bot")
+rectLeftBorder = Rect(leftBorder.x, leftBorder.y, leftBorder.width, leftBorder.height)
+rectRightBorder = Rect(rightBorder.x, rightBorder.y, rightBorder.width, rightBorder.height)
+rectTopBorder = Rect(topBorder.x, topBorder.y, topBorder.width, topBorder.height)
+rectBotBorder = Rect(botBorder.x, botBorder.y, botBorder.width, botBorder.height)
 
 #create values for ball
 ball = Ball(500, 400, 13, -5, -5, 0, 180, True)
@@ -77,6 +81,8 @@ while  running:
         rectBar2.move_ip(0, bar2.moveSpeed)
 
    #change ball direction if ever it hits something
+    ball.distBorder(leftBorder)
+    ball.distBorder(rightBorder)
     ball.distBorder(topBorder)
     ball.distBorder(botBorder)
     ball.distBar(bar1)
@@ -89,9 +95,12 @@ while  running:
     pygame.draw.line(screen, (255, 1, 1), (500, 0), (500, 800), 1) #draw middle line
     pygame.draw.rect(screen, (0, 255, 0), rectBar2) #draw player bars
     pygame.draw.rect(screen, (255, 0, 0), rectBar1)
+    pygame.draw.rect(screen, (9, 255, 255), rectLeftBorder)
+    pygame.draw.rect(screen, (0, 255, 255), rectRightBorder)
     pygame.draw.rect(screen, (0, 255, 255), rectTopBorder)
     pygame.draw.rect(screen, (0, 255, 255), rectBotBorder)
-    pygame.draw.circle(screen, (0, 0, 255), (ball.x, ball.y), ball.radius, 0) #draw ball
+    if ball.moveX != 0 or ball.moveY != 0: #check if the ball stopped moving
+        pygame.draw.circle(screen, (0, 0, 255), (ball.x, ball.y), ball.radius, 0) #draw ball
     pygame.display.update()
 
     #tick the clock to check next update

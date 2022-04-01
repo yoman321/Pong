@@ -22,11 +22,8 @@ class Ball:
         else:
             extremity = self.x + self.radius
         
-        print("extremity {} {} {} {}".format(extremity, self.x, self.y, bar.player))#test
         if bar.player == "left" and extremity <= (bar.xTop + bar.width):
-            print("here bar left {} {}".format(bar.yTop, bar.yBot))#test
             if self.y >= bar.yTop and self.y <= bar.yBot:
-                # print("here bar left")#test
                 self.moveSpeed = self.moveSpeed * -1
                 if self.y >= bar.yTop and self.y < bar.yTop + 25:
                     self.angle = 315
@@ -50,7 +47,6 @@ class Ball:
         elif bar.player == "right" and extremity >= bar.xTop:
             if self.y >= bar.yTop and self.y <= bar.yBot:
                 self.moveSpeed = self.moveSpeed * -1 #change movement direction
-                # print("here bar right")#test
                 if self.y >= bar.yTop and self.y < bar.yTop + 25:
                     self.angle = 25
                 elif self.y >= bar.yTop + 25 and self.y < bar.yTop + 50:
@@ -64,7 +60,6 @@ class Ball:
             
                 #change movement for x and y
                 if self.firstCollision:
-                    print("right self collision")
                     self.moveSpeed = -8
                     self.firstCollision = False
 
@@ -73,10 +68,18 @@ class Ball:
 
     def distBorder(self, border):
         extremity = 0
-        if (border.name == "top"):
+        if border.name == "left":
+            extremity = self.x - self.radius
+        elif border.name == "right":
+            extremity = self.x + self.radius
+        elif border.name == "top":
             extremity = self.y - self.radius + 1
         else:
             extremity = self.y + self.radius
         
-        if (border.name == "top" and extremity <= border.yLeft) or (border.name == "bot" and extremity >= border.yLeft):
+        if (border.name == "left" and extremity <= border.x) or (border.name == "right" and extremity >= border.x):
+            self.moveX = 0
+            self.moveY = 0
+        elif (border.name == "top" and extremity <= border.y) or (border.name == "bot" and extremity >= border.y):
             self.moveY *= -1
+
